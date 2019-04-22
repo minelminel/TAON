@@ -1,5 +1,7 @@
 # TAON :dollar:
 
+![cap1](https://user-images.githubusercontent.com/46664545/56477849-038df980-6478-11e9-9593-ac5e58fe58f0.png)
+
 ### About
 I wrote this program a while back to give myself a useful foundation for implementing some basic machine learning techniques.
 There are 3 components:
