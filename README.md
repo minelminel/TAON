@@ -1,2 +1,3 @@
-# TAON :dollar: 🧠
+# TAON :dollar:
+:brain:
 
