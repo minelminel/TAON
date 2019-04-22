@@ -13,6 +13,7 @@ This program is inherantly configured to handle the default .CSV transaction his
 | Transaction ID | Date | Merchant | Debit | Credit | Balance |
 +----------------+------+----------+-------+--------+---------+
 ```
+This will mean that some basic restructuring is necessary if your format is different
 
 *note:* for the purpose of this repository, we will focus on the MATLAB portions disregarding the interface with Python, which handles the more robust implementation of the machine learning aspects. As a result, I am *not* including the compiled binaries and assuming you have access to MATLAB>=2017b in order to run the GUI.
 
