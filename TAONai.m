@@ -1,28 +1,20 @@
+%% TAON: Tag Array Open-Source Notebook
 
 %%       MEMORY PREPARATION
-clear;
-clc;
+clear
+clc
 global book booktab formatOut defaultAnswer opts filetype filetypeUPPER pandata;
+
+
 %%       ASCII GRAPHICS
+ln1 = '___________.___                                     __      __.__                         .___';
+ln2 = '\_   _____/|   | ____ _____    ____   ____  ____   /  \    /  \__|____________ _______  __| _/';
+ln3 = ' |    __)  |   |/    \\__  \  /    \_/ ___\/ __ \  \   \/\/   /  \___   /\__  \\_  __ \/ __ | ';
+ln4 = ' |     \   |   |   |  \/ __ \|   |  \  \__\  ___/   \        /|  |/    /  / __ \|  | \/ /_/ | ';
+ln5 = ' \___  /   |___|___|  (____  /___|  /\___  >___  >   \__/\  / |__/_____ \(____  /__|  \____ | ';
+ln6 = '     \/             \/     \/     \/     \/    \/         \/           \/     \/           \/ ';
+ln7 = 'Version 1.8';
 
-for i = 1
-    ln1 = '___________.___                                     __      __.__                         .___';
-    ln2 = '\_   _____/|   | ____ _____    ____   ____  ____   /  \    /  \__|____________ _______  __| _/';
-    ln3 = ' |    __)  |   |/    \\__  \  /    \_/ ___\/ __ \  \   \/\/   /  \___   /\__  \\_  __ \/ __ | ';
-    ln4 = ' |     \   |   |   |  \/ __ \|   |  \  \__\  ___/   \        /|  |/    /  / __ \|  | \/ /_/ | ';
-    ln5 = ' \___  /   |___|___|  (____  /___|  /\___  >___  >   \__/\  / |__/_____ \(____  /__|  \____ | ';
-    ln6 = '     \/             \/     \/     \/     \/    \/         \/           \/     \/           \/ ';
-    ln7 = 'Version 1.8';
-    
-    tic
-    line1 ='     ********   T R A N S A C T I O N   **********';
-    line2 ='     ****************  I M P O R T  ****************';
-    line3 ='     ********************  B O T ********************';
-    copyright ='     © 2019 MICHAEL LAWRENSON';
-    line5 ='Input file name [.csv]: ';
-end
-
-pcolor(rand(200)); % cool
 
 %%       INITIALIZE WORKSPACE, SET DEFAULTS @@@@@
 % set(0,'defaultfigureposition',[360   278   560   420])  % SYSTEM DEFAULT
@@ -43,15 +35,16 @@ checkmark = imread('checkmarkclipart2.png','BackgroundColor',[1 1 1]);
 Neon = true;
 format bank
 Splash = sprintf('\n%s\n%s\n%s\n%s\n%s\n%s\n\n\t\t\t\t%s\n\t\t\t\t\t    %s\n\n',...
-    ln1,ln2,ln3,ln4,ln5,ln6,copyright,ln7);
-
+    ln1,ln2,ln3,ln4,ln5,ln6,ln7);
 fprintf('%s',Splash);   % SPLASH BANNER ******
 
+
 %%       IMPORT DATA, READ RAW FILE TO TABLE
-FILENAME = TAONgetfilename(defaultAnswer, opts, filetype, filetypeUPPER); %,'mtbtemp.csv'); % 'defaulttestfile' goes last
+FILENAME = TAONgetfilename(defaultAnswer, opts, filetype, filetypeUPPER);
 if ~strlength(FILENAME)
     return
 end
+
 
 if Neon; f = waitbar(.0,'Accessing file data','Name','File Import'); end
 %%       READ DATA INTO ARRAYS, CREATE CELL ARRAY 'master'
@@ -102,7 +95,6 @@ if Neon; waitbar(0.9,f,'Calculating metadata...'); end
 %%       NORMALIZED DAILY BALANCE (1)
 [DAYNORM, scrub, h, NORMBAL] = TAONnormalizedbalance(book);
 % *** scrub table not outputting properly, only displaying 1st column
-
 AAA = table2array(scrub);
 BBB = num2cell(DAYNORM);
 pandata = [AAA BBB];
@@ -144,14 +136,6 @@ while 1
             return
         case 1     %       DISPLAY UNABRIDGED TABLE
             %       DISPLAY UNABRIDGED TABLE
-            % inplement UITABLE with defined behavior for closing the
-            % window
-            % uitable(booktab) %//does not work in current form
-            
-%             disp(booktab);
-%             f = figure;
-%             uit = uitable(f);
-
             close all
             set(0,'defaultfigureposition',[180   50   960   520]);   % default figure position
             varnames = booktab.Properties.VariableNames;
@@ -166,7 +150,6 @@ while 1
             uit.FontSize = 12;
 
         case 2    %       DISPLAY METADATA TABLE
-            
             %       DISPLAY METADATA TABLE
             format bank
             close all
@@ -181,35 +164,7 @@ while 1
             uit.ColumnFormat =  {'bank'};
             uit.ColumnWidth = {70,70,40,90,90,60,60,80,80,80,80,80,100};
             uit.FontSize = 12;
-            %{
-            fprintf('\n')
-            disp(fMETA(1,1:3));
-            fprintf('\n')
-            disp(fMETA(1,4:5));
-            fprintf('\n')
-            disp(fMETA(1,6:8));
-            fprintf('\n')
-            disp(fMETA(1,9:11));
-            fprintf('\n')
-            disp(fMETA(1,12:13));
-            fprintf('\n')
-            format long
-            %}
         case 3    %         DISPLAY SUMMARIZED TABLE FROM IMPORT
-            
-            %         DISPLAY SUMMARIZED TABLE FROM IMPORT
-            %{
-            format bank
-            pdate = booktab(:,10);
-            pvend = booktab(:,3);
-            pdeb = booktab(:,4);
-            pcred = booktab(:,5);
-            pbal = booktab(:,6);
-            pcat = booktab(:,8);
-            printtab = [pdate pvend pdeb pcred pbal pcat];
-            disp(printtab);
-            format long
-            %}
             close all
             set(0,'defaultfigureposition',[270   50   750   520]);   % window position & size
             Summary = [booktab(:,10),booktab(:,3),booktab(:,4),...
@@ -224,10 +179,7 @@ while 1
             uit.ColumnFormat =  {'bank'};
             uit.ColumnWidth = {70,290,60,60,100,100};
             uit.FontSize = 12;
-            
-            
         case 4    %         DISPLAY CATEGORIZED CASH FLOW TOTALS, % OF SPENDING
-            
             %         DISPLAY CATEGORIZED CASH FLOW TOTALS, % OF SPENDING
             format bank
             %        CONVERT TABLE TO CELL ARRAY, REMOVE POSITIVE AMOUNT(S)
@@ -245,26 +197,13 @@ while 1
             Breakdown.Properties.VariableNames = {'AMOUNT','PERCENT'};
             disp(Breakdown);
             format long
-            
         case 5    %         CONTROL FUNCTION FOR FIGURE DISPLAY
-            
             %         CONTROL FUNCTION FOR FIGURE DISPLAY
             % place code for actual figure generation here, so it will
             % re-display once closed and update as needed
             set(h,'visible','on','CloseRequestFcn',@figDelete);
             h.Name = 'Qualitative';
             return
-%             figure('DeleteFcn',@myrequestclose)
-            
-            
-            % set(handlesname,'CloseRequestFcn',@myrequest)
-            
-            
-            
-            
-            
-            
-            
         case 6    %         DISPLAY LEDGER
             %         DISPLAY LEDGER
             ledgerFile = which(ledgername);
@@ -274,9 +213,7 @@ while 1
             else
                 uiwait(errordlg('No existing ledger found'));
             end
-            
         case 7    %         FILE NAME GENERATION & EXPORT
-            
             %         PREPARE DATA FOR EXPORT
             %         FILE NAME GENERATION & EXPORT
             username = inputdlg('Specify name for export file [.CSV]:','Export Data');
@@ -285,7 +222,6 @@ while 1
             OkToWrite = 1;
             if isempty(char(username))
                 OkToWrite = 0;
-%                 uiwait(errordlg('Export cancelled.','Export'));
                 continue
             elseif contains(username,filetype)
                 exportname =  username;
@@ -304,7 +240,6 @@ while 1
                     uiwait(msgbox('File could not be created.','Export','error'));
                 end
             end
-            
         case 8    %         APPEND LEDGER
             %   PROMPT USER FOR CONFIRMATION
             confirmmsg = sprintf('Are you sure you want to append ledger data?');
@@ -324,7 +259,6 @@ while 1
                     dupestr = string(ledcel);  % 2 3 9
                     prettyarr = categorical(dupestr);
                     cleanleg = unique(prettyarr,'rows');
-%                     fprintf('\n>>>\tLedger Entries:  %d\n',FSIZE);
                     myledger = cellstr(cleanleg);
                     tableg = cell2table(myledger);
                     tableg.Properties.VariableNames = VBNames;
@@ -337,11 +271,9 @@ while 1
                         'Ledger Append','Custom',checkmark));
                 end
             end
-            
         case 9    %       EXPORT CURRENT LEDGER
                 %       EXPORT CURRENT LEDGER
             ledgerFile = fileparts(which(ledgername));
-%             ledgerFile = strcat(ledgerPath,'/',ledgername);
             if ~isempty(ledgerFile)
                 exportledgermsg = inputdlg('Specify name for export file [.CSV]','Export Ledger',[1 50]);
                 username = string(exportledgermsg{:});
@@ -368,7 +300,6 @@ while 1
             else
                 uiwait(errordlg('No existing ledger found','Error','error'));
             end
-            
         case 10   %     DELETE LEDGER (((DEVELOPMENT TOOL)))
             %   PROMPT USER FOR CONFIRMATION
             confirmmsg = sprintf('Are you sure you want to delete ledger?');
@@ -381,142 +312,11 @@ while 1
                     uiwait(msgbox('Ledger deleted','Abort','custom',checkmark))
                 end
             end
-                
         case 11   %     CLEAR COMMAND WINDOW
             clc;
-            
         otherwise       % CATCH-ALL CASE
             uiwait(errordlg('Invalid selection','Error','error'));
     end
 end
 
-
-
-%% NOTES, etc
-
-
-
-% plotbrowser(...) is GREAT for the GUI figure display, allows multiple
-%     plot lines to be toggled on/off
-
-
-% prepare memory
-% ascii graphics
-% set defaults
-% file name specification
-% read file data into arrays
-% create cell array MASTER
-% check for missing credit, debit, & balance amounts
-% check and correct 1st balance entry (most recent amount) based on
-%   available data.
-% check if user clarification is required for 1st balance
-% use balance & transaction to calculate missing values
-% MAKE SURE NO ERRORS WERE MADE
-% assign TYPE column values
-% scrub dictionary
-% search, algorithm for categorization
-% serial number assignment
-% flip cell array upside down: BOOK
-% some light housekeeping with table formatting & naming
-
-% === START OF META ANALYSIS === %
-% determine standard metadata values from callable variables
-% calculate unique days
-%   normalized daily balance
-%   subplot of normal balance
-% frequency of category occurrance
-%   subplot transaction frequency pie chart
-% categorical expenses subplot
-% pie chart visibility control
-
-% === MAIN MENU === %
-% options 1-9
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%{
-for i = 1:FSIZE
-    if strcmp(master(i,8),'') == 1
-        fprintf('\nPRESS ENTER TO SKIP\n\n');
-        TERM = master(i,3);
-        Wrdef = newentry(TERM);
-        master(i,8) = {Wrdef};
-        end
-end
-
-
-    
-toc
-%}
-% ZZZ = cell2table(master)
-%{
-if cell2mat(master(1,6)) == 0
-    tmp2 = master(ii,6)
-    tmp1 = master(ii+1,6)
-    amt = cellfun(@minus,tmp2,tmp1)
-end
-%}
-
-
-
-
-
-%{
-% ? ? ? ? ? ? ? ? ? ? ELLIPTIC CURVES ? ? ? ? ? ? ? ? ? ? %
-
-% y^2 = x^3 + ax + b % general form of equation
-
-% +++++++++++++ DO NOT EDIT
-close all
-format shortg
-clear;
-clc;
-% % % VARIABLES 
-a = 1;
-b = 1;
-x = -5:0.1:5
-ysymb = 4*power(x,3) - 5*x + 5
-yi = real(sqrt(ysymb))
-yj = imag(sqrt(ysymb))
-Y = [yi; yj]
-
-% % % GATHER PLOTS
-eucl = [x.' Y.'].'
-
-plot(eucl)
-%++++++++++++++ DO NOT EDIT
-
-%}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+% end of script
