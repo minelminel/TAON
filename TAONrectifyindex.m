@@ -8,8 +8,6 @@ function [ClarifyIndex,NumMissing,NumFixed] = TAONrectifyindex(master)
 % 10 case 1: B(i) missing... B(i) = B(i+1) + T(i)
 % 11 case X~X~X
 
-% clc; clear;
-% global master;
 x = cell2mat(master(:,[4:6]));
 D = x(:,1); C = x(:,2); Bl = x(:,3); Tr = D + C;
 tetris = [Tr Bl];
@@ -18,8 +16,6 @@ n = length(tetris);
 
 % ** INSERT CacheArray right here to write values
 % ** PERFORM computations WITH tetris values, IF logical values exist
-
-
 % plato is a logical array representing presence of data, size(n,2)
 
 % === REAL VALUES === %
@@ -133,7 +129,7 @@ while (nnz(~[t b]) > 0) && (Count < nnz(~plato(:,1)))
             end
         end
     end
-    if (nnz(~t) == 1) && ~t(end) % if only 0 in array is t(end)...ø
+    if (nnz(~t) == 1) && ~t(end) % if only 0 in array is t(end)...Ã¸
         Count = n;
     else
       Count = Count + 1;
@@ -156,187 +152,3 @@ ClarifyIndex = find(t==0);
 % =============================================================
 % return
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-%{
-% test case for algo
-
-   1   1
-   1   1
-   1   1
-   0   1
-   1   0
-   1   0
-   1   1
-   1   1
-   1   1
-
-%}
-
-
-
-
-
-
-
-
-
-% ERROR CASES: STUCK IN LOOP
-%{
-plato
-plato =
-  39×2 logical array
-   1   1
-   1   1
-   1   0
-   0   1
-   1   1
-   0   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   0   0
-   1   1
-   0   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   0
-   1   0
-   1   1
-   0   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   1
-   1   0
-
-%}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
